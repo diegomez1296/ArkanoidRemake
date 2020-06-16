@@ -1,13 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public abstract class BlockState
+﻿public abstract class BallState
 {
-    protected Block block;
+    protected Ball ball;
 
-    public BlockState(Block block)
+    public BallState(Ball ball)
     {
-        this.block = block;
+        this.ball = ball;
         Initialize();
     }
 

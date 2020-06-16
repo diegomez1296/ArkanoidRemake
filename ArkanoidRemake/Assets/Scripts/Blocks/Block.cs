@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Block : MonoBehaviour
+public class Block : MonoBehaviour
 {
     protected BlockState currentblockState;
 
-    public BlockAsset blockAsset;
     public float HP { get; set; }
     public float Score { get; set; }
     public float Bonus { get; set; }
