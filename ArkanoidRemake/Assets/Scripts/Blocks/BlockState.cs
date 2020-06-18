@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class BlockState
+public abstract class BlockState : ArkanoidState
 {
     protected Block block;
 
@@ -10,8 +10,6 @@ public abstract class BlockState
         this.block = block;
         Initialize();
     }
-
-    protected abstract void Initialize(); //This method describe values of our Block
 
     protected abstract void OnHit(); //This method describe what will happen after hit
 }

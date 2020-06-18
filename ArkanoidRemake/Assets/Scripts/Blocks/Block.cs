@@ -3,10 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Block : MonoBehaviour
+public class Block : ArkanoidObject
 {
-    protected BlockState currentblockState;
-
     public float HP { get; set; }
     public float Score { get; set; }
     public float Bonus { get; set; }
@@ -14,14 +12,14 @@ public class Block : MonoBehaviour
 
     public event Action OnHitted;
 
-    public void SetState(BlockState blockState) => currentblockState = blockState;
-
-    public void SetPosition(Vector2 newPosition) => this.transform.position = newPosition;
-
-    public void GetHit()
+    private void Start()
     {
-        OnHitted?.Invoke();
+        SetState(new DefaultBlockState(this));
     }
 
-    
+    public void GetHit(float damage)
+    {
+        HP -= damage;
+        OnHitted?.Invoke();
+    }
 }

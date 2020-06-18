@@ -14,13 +14,15 @@ public class DefaultBlockState : BlockState
         block.HP = 1;
         block.Score = 100;
         block.Bonus = 30;
-        //block.CurrentSprite.sprite = block.blockAsset.Sprites[0];
+        block.CurrentSprite.sprite = GameController.Instance.Data.blockSprites[UnityEngine.Random.Range(1, 6)];
+        block.GetComponent<IgnoreColliderEffect>().enabled = true;
         block.OnHitted -= OnHit;
         block.OnHitted += OnHit;
     }
 
     protected override void OnHit()
     {
-        throw new System.NotImplementedException();
+        if (block.HP <= 0)
+            block.gameObject.SetActive(false);
     }
 }

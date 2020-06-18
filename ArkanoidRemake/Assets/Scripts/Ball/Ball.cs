@@ -2,22 +2,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class Ball : MonoBehaviour
+public class Ball : ArkanoidObject
 {
-    protected BallState currentBallState;
+    private bool isRunning = false;
+    private Plank Plank => FindObjectOfType<Plank>();
 
+    public Rigidbody2D BallRB => GetComponent<Rigidbody2D>();
     public float Damage { get; set; }
+
     public float CurrentSpeed { get; set; }
     public float SpeedIncrease { get; set; }
 
     public event Action OnHitted;
 
-    public void SetState(BallState ballState) => currentBallState = ballState;
+    private void Start()
+    {
+        SetState(new DefaultBallState(this));
+    }
 
-    public void SetPosition(Vector2 newPosition) => this.transform.position = newPosition;
+    private void Update()
+    {
+        if (!isRunning)
+        {
+            this.transform.position = new Vector3(Plank.transform.position.x, this.transform.position.y, 0);
 
-    public void GetHit()
+            if (Input.GetMouseButtonDown(0))
+            {
+                BallRB.isKinematic = false;
+                BallRB.AddForce(new Vector2(Random.Range(-0.5f, 0.5f), 0.5f) * GameController.START_BALL_SPEED * CurrentSpeed);
+                isRunning = true;
+            }
+        }
+    }
+
+    public void GetHit(Collision2D collision)
     {
         OnHitted?.Invoke();
     }

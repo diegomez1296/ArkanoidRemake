@@ -12,11 +12,19 @@ public class DefaultBallState : BallState
     {
         ball.Damage = 1;
         ball.CurrentSpeed = 1;
-        ball.SpeedIncrease = 0.01f;
+        ball.SpeedIncrease = 0.001f;
+        ball.OnHitted -= OnHit;
+        ball.OnHitted += OnHit;
     }
 
     protected override void OnHit()
     {
-        throw new System.NotImplementedException();
+        if (ball.CurrentSpeed < 1.05f)
+        {
+            ball.CurrentSpeed += ball.SpeedIncrease;
+            ball.BallRB.velocity *= ball.CurrentSpeed;
+        }
+
+        Debug.Log(ball.CurrentSpeed);
     }
 }

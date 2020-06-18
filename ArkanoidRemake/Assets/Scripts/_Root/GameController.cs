@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public const int START_BALL_SPEED = 500;
 
-    public GameController Instance => this;
+    public static GameController Instance;
 
     public GameData Data { get; private set; }
     public SaveController Save { get; private set; }
@@ -13,6 +14,8 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        Instance = this;
+
         Data = GetComponentInChildren<GameData>();
         Save = GetComponentInChildren<SaveController>();
         Audio = GetComponentInChildren<AudioController>();
