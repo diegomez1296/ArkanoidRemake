@@ -14,7 +14,7 @@ public class DefaultBlockState : BlockState
         block.HP = 1;
         block.Score = 100;
         block.Bonus = 30;
-        block.CurrentSprite.sprite = GameController.Instance.Data.blockSprites[UnityEngine.Random.Range(1, 6)];
+        block.CurrentSprite.sprite = GameController.Instance.Data.blockSprites[UnityEngine.Random.Range(1, 5)];
         block.GetComponent<IgnoreColliderEffect>().enabled = true;
         block.OnHitted -= OnHit;
         block.OnHitted += OnHit;
