@@ -24,4 +24,6 @@ public class GameData : MonoBehaviour
     public List<Sprite> bonusSprites;
     [Space]
     public List<Texture2D> backgroundImages;
+    [Space]
+    public List<Sprite> lifeSprites;
 }
