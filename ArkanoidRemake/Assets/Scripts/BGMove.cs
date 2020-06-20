@@ -10,7 +10,8 @@ public class BGMove : MonoBehaviour
     private float valueX, valueY;
     private float time = 0.01f;
 
-    private void Start() => StartCoroutine(MoveBG(time));
+    private void OnEnable () => StartCoroutine(MoveBG(time));
+    private void OnDisable () => StopCoroutine(MoveBG(time));
 
     IEnumerator MoveBG(float time)
     {

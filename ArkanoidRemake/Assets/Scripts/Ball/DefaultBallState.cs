@@ -24,7 +24,5 @@ public class DefaultBallState : BallState
             ball.CurrentSpeed += ball.SpeedIncrease;
             ball.BallRB.velocity *= ball.CurrentSpeed;
         }
-
-        Debug.Log(ball.CurrentSpeed);
     }
 }

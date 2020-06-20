@@ -4,9 +4,7 @@ using UnityEngine;
 
 public abstract class ArkanoidObject : MonoBehaviour
 {
-    protected ArkanoidState currentState;
-
-    public void SetState(ArkanoidState thisState) => currentState = thisState;
+    public ArkanoidState CurrentState { get; set; }
 
     public void SetPosition(Vector2 newPosition) => this.transform.position = newPosition;
 }

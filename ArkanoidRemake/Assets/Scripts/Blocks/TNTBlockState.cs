@@ -12,7 +12,7 @@ public class TNTBlockState : BlockState
     {
         block.HP = 1;
         block.Score = 1500;
-        block.Bonus = 70;
+        block.BonusPercent = 70;
         //block.CurrentSprite.sprite = block.blockAsset.Sprites[0];
         block.OnHitted -= OnHit;
         block.OnHitted += OnHit;

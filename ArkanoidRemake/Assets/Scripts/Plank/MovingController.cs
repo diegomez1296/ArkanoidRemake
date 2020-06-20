@@ -9,7 +9,11 @@ public class MovingController : MonoBehaviour
 
     //Movement variables
     private float shift, newPositionX, mousePositionX;
-    private void Update() => Movement();
+    private void Update()
+    {
+        if (!GameController.isGameRunning) return;
+        Movement();
+    }
     private void Movement()
     {
         shift = this.GetComponent<SpriteRenderer>().size.x / 4;

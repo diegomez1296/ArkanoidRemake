@@ -10,16 +10,16 @@ public class SolidBlockState : BlockState
 
     protected override void Initialize()
     {
-        block.HP = -1;  // -1 => infinity
+        block.HP = 999; 
         block.Score = 1000;
-        block.Bonus = 100;
-        //block.CurrentSprite.sprite = block.blockAsset.Sprites[0];
+        block.BonusPercent = 100;
+        block.CurrentSprite.sprite = GameController.Instance.Data.blockSprites[0];
         block.OnHitted -= OnHit;
         block.OnHitted += OnHit;
     }
 
     protected override void OnHit()
     {
-        throw new System.NotImplementedException();
+        block.DestroyBlock();
     }
 }

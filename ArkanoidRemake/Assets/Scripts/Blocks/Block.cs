@@ -5,21 +5,29 @@ using UnityEngine;
 
 public class Block : ArkanoidObject
 {
+    public float maxHP;
     public float HP { get; set; }
-    public float Score { get; set; }
-    public float Bonus { get; set; }
+    public int Score { get; set; }
+    public float BonusPercent { get; set; }
     public SpriteRenderer CurrentSprite => GetComponent<SpriteRenderer>();
 
     public event Action OnHitted;
-
-    private void Start()
-    {
-        SetState(new DefaultBlockState(this));
-    }
 
     public void GetHit(float damage)
     {
         HP -= damage;
         OnHitted?.Invoke();
+    }
+
+    public void DestroyBlock()
+    {
+        if (HP <= 0)
+        {
+            if (100 - BonusPercent <= UnityEngine.Random.Range(0, 100))
+                GameController.Instance.CreateBonus(this);
+
+            gameObject.SetActive(false);
+            GameData.CurrentScore += Score;
+        }
     }
 }

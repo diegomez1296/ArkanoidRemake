@@ -9,8 +9,9 @@ public abstract class BonusState : ArkanoidState
     protected BonusState(Bonus bonus)
     {
         this.bonus = bonus;
+        bonus.isUsed = false;
         Initialize();
     }
 
-    protected abstract void OnCollect(); //This method describe what will happen after collect the bonus
+    protected abstract void OnCollect(Plank plank); //This method describe what will happen after collect the bonus
 }

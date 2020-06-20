@@ -5,20 +5,19 @@ using UnityEngine;
 
 public class Bonus : ArkanoidObject
 {
-    public event Action OnCollected;
 
-    private void Start()
+    public bool isUsed = false;
+    public int bonusScore = 100;
+    public delegate void OnCollectBonus(Plank plank);
+    public event OnCollectBonus OnCollected;
+
+    public void CollectBonus(Plank plank)
     {
-        //SetState(new DefaultBallState(this));
-    }
+        if (isUsed) return;
 
-    private void Update()
-    {
-
-    }
-
-    public void Collect(Collision2D collision)
-    {
-        OnCollected?.Invoke();
+        OnCollected(plank);
+        this.gameObject.SetActive(false);
+        isUsed = true;
+        Destroy(this.gameObject);
     }
 }

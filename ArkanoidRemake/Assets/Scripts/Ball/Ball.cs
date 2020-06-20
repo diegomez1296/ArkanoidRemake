@@ -19,7 +19,7 @@ public class Ball : ArkanoidObject
 
     private void Start()
     {
-        SetState(new DefaultBallState(this));
+        CurrentState = new DefaultBallState(this);
     }
 
     private void Update()
