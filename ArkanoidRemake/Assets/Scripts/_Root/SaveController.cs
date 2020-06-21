@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -6,66 +7,72 @@ using UnityEngine;
 
 public class SaveController : MonoBehaviour
 {
+    [Serializable]
     public class SaveGameBlock
     {
         public int Highscore { get; set; }
-        public Map Map { get; set; }
-        public Plank Plank { get; set; }
+        public int Currentscore { get; set; }
+        public List<Block> BlocksOfMap { get; set; }
+        public float PlankHP { get; set; }
 
-        public SaveGameBlock(int highscore, Map map, Plank plank)
+        public SaveGameBlock(int highscore, int currentscore, List<Block> blocksOfMap, float plankHP)
         {
             Highscore = highscore;
-            Map = map;
-            Plank = plank;
+            Currentscore = currentscore;
+            BlocksOfMap = blocksOfMap;
+            PlankHP = plankHP;
         }
     }
 
     public SaveGameBlock SaveBlock { get; private set; }
 
-    public void SaveGame(SaveGameBlock saveGameBlock) 
+
+    public void CreateSave()
     {
-        SaveToFile(saveGameBlock);
+        SaveBlock = new SaveGameBlock
+                    (GameData.CurrentScore > GameData.HighScore ? GameData.CurrentScore : GameData.HighScore, GameData.CurrentScore,
+                    GameData.blocksOfMap, LevelController.Instance.Plank.HP);
+
+        SaveGame();
+    }
+
+    private void SaveGame() 
+    {
+        SaveToFile(SaveBlock);
     }
 
     public void LoadGame()
     {
         SaveBlock = ReadFromFile();
+        //Debug.Log(SaveBlock.Highscore);
+        //Debug.Log(SaveBlock.Map);
+        //Debug.Log(SaveBlock.Plank);
     }
 
     private void SaveToFile(SaveGameBlock saveGameBlock)
     {
+        string path = GameController.SAVES_PATH;
+        if (!Directory.Exists(path))
+            Directory.CreateDirectory(path);
+
+        string saveStr = JsonUtility.ToJson(saveGameBlock);
         try
         {
-            string path = GameController.SAVES_PATH + "Save_" + 0 + ".arc";
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream fs = new FileStream(path, FileMode.Create);
-            using (BinaryWriter binaryWriter = new BinaryWriter(fs))
-            {
-                formatter.Serialize(fs, saveGameBlock);
-            }
+            File.WriteAllText(path + "Save_" + 0 + ".arc", JsonUtility.ToJson(saveGameBlock));
         }
         catch (IOException e)
         {
-            Debug.LogError(saveGameBlock);
+            Debug.LogError("value: " + saveStr);
             Debug.LogError(e.Message);
         }
     }
 
     private SaveGameBlock ReadFromFile()
     {
+        string path = GameController.SAVES_PATH + "Save_" + 0 + ".arc";
         try
         {
-            string path = GameController.SAVES_PATH + "Save_" + 0 + ".arc";
-            FileStream fs = new FileStream(path, FileMode.Open);
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            using (BinaryReader binaryReader = new BinaryReader(fs))
-            {
-                return (SaveGameBlock)formatter.Deserialize(fs);
-            }
+            return JsonUtility.FromJson<SaveGameBlock>(File.ReadAllText(path));
         }
         catch (IOException e)
         {

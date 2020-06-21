@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
+    public PausePanel pausePanel;
+    [Space]
     [SerializeField] private TextMeshProUGUI highscore;
     [SerializeField] private TextMeshProUGUI currscore;
     [SerializeField] private GameObject lifesParent;
@@ -22,6 +24,18 @@ public class GameUI : MonoBehaviour
         highscoreColor = highscore.color;
         currentScoreColor = currscore.color;
         lifes = lifesParent.GetComponentsInChildren<Image>();
+        pausePanel.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!pausePanel.gameObject.activeSelf) pausePanel.ShowPause();
+            else pausePanel.HidePause();
+
+            pausePanel.CheckPauseOptions();
+        }
     }
 
     public void SetHighScore()

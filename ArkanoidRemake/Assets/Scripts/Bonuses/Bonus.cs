@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Bonus : ArkanoidObject
 {
-
-    public bool isUsed = false;
     public int bonusScore = 100;
     public delegate void OnCollectBonus(Plank plank);
     public event OnCollectBonus OnCollected;

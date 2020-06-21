@@ -22,6 +22,7 @@ public class DefaultBlockState : BlockState
 
     protected override void OnHit()
     {
+        Debug.Log(block.CurrentState.ToString());
         block.DestroyBlock();
     }
 }

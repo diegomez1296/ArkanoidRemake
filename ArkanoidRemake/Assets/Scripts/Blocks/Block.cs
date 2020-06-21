@@ -21,13 +21,18 @@ public class Block : ArkanoidObject
 
     public void DestroyBlock()
     {
-        if (HP <= 0)
+        if (HP <= 0 && !isUsed)
         {
+            Debug.Log("DestroyBlock");
+            if(!typeof(SolidBlockState).IsInstanceOfType(this))
+                LevelController.Instance.Map.BlocksDestroyed++;
+
             if (100 - BonusPercent <= UnityEngine.Random.Range(0, 100))
                 GameController.Instance.CreateBonus(this);
 
             gameObject.SetActive(false);
             GameData.CurrentScore += Score;
+            isUsed = true;
         }
     }
 }

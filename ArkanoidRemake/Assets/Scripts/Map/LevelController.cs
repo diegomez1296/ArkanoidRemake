@@ -15,5 +15,13 @@ public class LevelController : MonoBehaviour
     {
         Map = GetComponentInChildren<Map>();
         Plank = GetComponentInChildren<Plank>();
+
+        Plank.gameObject.SetActive(false);
+    }
+
+    public void ActivePlayer(int hp)
+    {
+        Plank.HP = hp;
+        Plank.gameObject.SetActive(true);
     }
 }

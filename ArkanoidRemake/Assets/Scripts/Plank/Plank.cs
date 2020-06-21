@@ -14,9 +14,18 @@ public class Plank : MonoBehaviour
         {
             hp = value;
             if (hp > 5) hp = 5;
-            if (hp < 0) hp = 0;  
             UIController.Instance.Game.SetHP(hp);
         }
+    }
+
+    public void LoseLife()
+    {
+        HP--;
+        ball.IsRunning = false;
+        ball.BallRB.isKinematic = true;
+        ball.BallRB.velocity = Vector2.zero;
+        if (hp < 0) 
+            GameController.Instance.LoseGame();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

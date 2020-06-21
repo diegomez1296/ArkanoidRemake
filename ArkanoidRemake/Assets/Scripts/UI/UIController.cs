@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -16,5 +18,24 @@ public class UIController : MonoBehaviour
     {
         Menu = GetComponentInChildren<MenuUI>();
         Game = GetComponentInChildren<GameUI>();
+
+        Game.gameObject.SetActive(false);
+    }
+
+    internal void SetGameUI()
+    {
+        Game.SetCurrentScore();
+        Game.SetHighScore();
+        Game.SetHP(LevelController.Instance.Plank.HP);
+        Game.pausePanel.HidePause();
+        Menu.gameObject.SetActive(false);
+        Game.gameObject.SetActive(true);
+    }
+
+    public void SetMenuUI()
+    {
+        GameController.Instance.CreateSave();
+        Game.gameObject.SetActive(false);
+        Menu.gameObject.SetActive(true);
     }
 }

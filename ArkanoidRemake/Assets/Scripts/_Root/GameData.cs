@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameData : MonoBehaviour
 {
-    public static List<Block> blockOfMap = new List<Block>();
+    public static List<Block> blocksOfMap = new List<Block>();
 
     //Resolution X
     public static float ResMinX => 0 - Camera.main.aspect * 5;
@@ -45,12 +45,21 @@ public class GameData : MonoBehaviour
 
     internal void CreateDataBlocks()
     {
-        blockOfMap.Clear();
+        blocksOfMap.Clear();
         for (int i = 0; i < GameController.MAX_AMOUNT_OF_BLOCKS_IN_MAP; i++)
         {
             Block block = Instantiate(blockPrefab, LevelController.Instance.Map.transform);
             block.gameObject.SetActive(false);
-            blockOfMap.Add(block);
+            blocksOfMap.Add(block);
+        }
+    }
+
+    internal void ClearDataBlocks()
+    {
+        foreach (var item in blocksOfMap)
+        {
+            item.gameObject.SetActive(false);
+            item.isUsed = false;
         }
     }
 }

@@ -17,7 +17,7 @@ public class DeadBonusState : BonusState
 
     protected override void OnCollect(Plank plank)
     {
-        plank.HP--;
+        plank.LoseLife();
         GameData.CurrentScore += bonus.bonusScore;
     }
 }

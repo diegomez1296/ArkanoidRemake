@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MenuUI : MonoBehaviour
 {
     [SerializeField] private GameObject buttonsPanel;
+    [SerializeField] private GameObject howToPlayPanel;
     private Button[] buttons;
 
     private void OnEnable()
@@ -14,7 +15,7 @@ public class MenuUI : MonoBehaviour
         buttons[0].interactable = false;
 
         if (GameController.Instance.Save.SaveBlock == null) return;
-        if (GameController.Instance.Save.SaveBlock.Map == null) return;
+        if (GameController.Instance.Save.SaveBlock.BlocksOfMap == null) return;
 
         buttons[0].interactable = true;
     }
@@ -26,12 +27,12 @@ public class MenuUI : MonoBehaviour
 
     public void OnClickNewGame()
     {
-
+        GameController.Instance.StartNewGame();
     }
 
     public void OnClickHowToPlay()
     {
-
+        howToPlayPanel.SetActive(!howToPlayPanel.activeSelf);
     }
     public void OnClickExit()
     {

@@ -15,10 +15,12 @@ public class GameController : MonoBehaviour
     public static string SAVES_PATH;
 
     public static GameController Instance;
-    public static bool isGameRunning = false;
+    private static bool isGameRunning = false;
+    public static bool IsGameRunning {get { return isGameRunning; } set { isGameRunning = value; Cursor.visible = !isGameRunning; } }
 
 
     public GameData Data { get; private set; }
+
     public SaveController Save { get; private set; }
     public AudioController Audio { get; private set; }
 
@@ -44,22 +46,26 @@ public class GameController : MonoBehaviour
         Data.CreateDataBlocks(); 
     }
 
-    public void StartGame()
+    public void StartNewGame()
     {
-        Map map = LevelController.Instance.Map;
-
+        Debug.Log("StartGame");
         GameData.CurrentScore = 0;
-        map.CurrentState = GetRandomMap(map, UnityEngine.Random.Range(0, MAPS_PATTERN_AMOUNT));
-        map.GenerateMap(false);
+        CreateNewMap();
+        SetGameUI();
+        IsGameRunning = true;
+        LevelController.Instance.ActivePlayer(3);
     }
 
-    private void Update()
+    private void SetGameUI()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            Debug.Log("F1 clicked");
-            StartGame();
-        }
+        UIController.Instance.SetGameUI();
+    }
+
+    private void CreateNewMap()
+    {
+        Map map = LevelController.Instance.Map;
+        map.CurrentState = GetRandomMap(map, UnityEngine.Random.Range(0, MAPS_PATTERN_AMOUNT));
+        map.GenerateMap(false);
     }
 
     public void CreateBonus(Block block, BonusState bonusState = null)
@@ -72,10 +78,10 @@ public class GameController : MonoBehaviour
         bonus.gameObject.SetActive(true);
         bonus.GetComponent<Rigidbody2D>().isKinematic = false;
     }
-
     public void LoseGame()
     {
-
+        IsGameRunning = false;
+        UIController.Instance.Game.pausePanel.ShowGameOver();
     }
 
 
@@ -123,6 +129,17 @@ public class GameController : MonoBehaviour
             default:
                 return null;
         }
+    }
+
+    internal void CreateSave()
+    {
+        IsGameRunning = false;
+        Save.CreateSave();
+    }
+
+    internal void CheckHighscore(int currentScore)
+    {
+        GameData.HighScore = currentScore > GameData.HighScore ? currentScore : GameData.HighScore;
     }
 
 }
