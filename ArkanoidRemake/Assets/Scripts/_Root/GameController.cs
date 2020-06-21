@@ -133,7 +133,6 @@ public class GameController : MonoBehaviour
 
     internal void CreateSave()
     {
-        IsGameRunning = false;
         Save.CreateSave();
     }
 

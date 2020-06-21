@@ -29,7 +29,6 @@ public class RectangleMapState : MapState
         int idx = 0;
         float x = map.StartPosition.x;
         float y = map.StartPosition.y;
-
         for (int i = 0; i < map.Rows; i++)
         {
             for (int j = 0; j < map.Columns; j++)

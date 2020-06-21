@@ -7,9 +7,7 @@ using UnityEngine;
 public sealed class Map : ArkanoidObject
 {
     public int BlocksToDestroy { get; set; }
-
-    private int blocksDestroyed;
-    public int BlocksDestroyed { get { return blocksDestroyed; }  set { blocksDestroyed++; CheckDestroyedBlocks(); } }
+    public int BlocksDestroyed { get; set; }
 
     public int Rows { get; set; }
     public int Columns { get; set; }
@@ -32,11 +30,17 @@ public sealed class Map : ArkanoidObject
         }
     }
 
-    private void CheckDestroyedBlocks()
+    public void CheckDestroyedBlocks()
     {
+        if (BlocksToDestroy <= 0) return;
+
         Debug.Log("BlocksDestroyed: " + BlocksDestroyed + "/" + BlocksToDestroy);
 
         if (BlocksDestroyed >= BlocksToDestroy)
+        {
+            BlocksToDestroy = 0;
+            BlocksDestroyed = 0;
             GenerateMap(false);
+        }
     }
 }

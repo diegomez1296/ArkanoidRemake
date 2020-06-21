@@ -24,8 +24,11 @@ public class Block : ArkanoidObject
         if (HP <= 0 && !isUsed)
         {
             Debug.Log("DestroyBlock");
-            if(!typeof(SolidBlockState).IsInstanceOfType(this))
+            if (!typeof(SolidBlockState).IsInstanceOfType(this))
+            {
                 LevelController.Instance.Map.BlocksDestroyed++;
+                LevelController.Instance.Map.CheckDestroyedBlocks();
+            }
 
             if (100 - BonusPercent <= UnityEngine.Random.Range(0, 100))
                 GameController.Instance.CreateBonus(this);

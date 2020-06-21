@@ -11,6 +11,7 @@ public class MenuUI : MonoBehaviour
 
     private void OnEnable()
     {
+        Time.timeScale = 1;
         buttons = buttonsPanel.GetComponentsInChildren<Button>();
         buttons[0].interactable = false;
 

@@ -23,5 +23,6 @@ public class LevelController : MonoBehaviour
     {
         Plank.HP = hp;
         Plank.gameObject.SetActive(true);
+        Plank.ball.IsRunning = false;
     }
 }
