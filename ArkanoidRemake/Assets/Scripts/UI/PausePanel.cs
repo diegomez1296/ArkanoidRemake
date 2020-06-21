@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PausePanel : MonoBehaviour
 {
+    public bool IsGameOver { get; set; }
     [SerializeField] private Text text;
     [SerializeField] private Button continueBtn;
     [SerializeField] private Button backBtn;
@@ -23,6 +24,8 @@ public class PausePanel : MonoBehaviour
         text.text = "GAME OVER";
         text.color = Color.red;
         GameController.Instance.CheckHighscore(GameData.CurrentScore);
+        GameController.Instance.Save.SaveBlock.BlocksOfMap = null;
+        IsGameOver = true;
         continueBtn.gameObject.SetActive(false);
         this.gameObject.SetActive(true);
     }

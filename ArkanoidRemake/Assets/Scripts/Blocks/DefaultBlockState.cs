@@ -22,7 +22,7 @@ public class DefaultBlockState : BlockState
 
     protected override void OnHit()
     {
-        //GameController.Instance.Audio.PlayDefBlockSFX();
+        GameController.Instance.Audio.PlayDefBlockSFX();
         block.DestroyBlock();
     }
 }

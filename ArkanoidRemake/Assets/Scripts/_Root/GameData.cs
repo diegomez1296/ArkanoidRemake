@@ -15,7 +15,7 @@ public class GameData : MonoBehaviour
     public static int HighScore
     {
         get { return highScore; }
-        set { highScore = value; UIController.Instance.Game.SetHighScore(); }
+        set { highScore = value; if(UIController.Instance != null) UIController.Instance.Game.SetHighScore(); }
     }
 
     private static int currentScore;

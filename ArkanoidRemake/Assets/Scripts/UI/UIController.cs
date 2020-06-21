@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     public static UIController Instance;
-
+    
     public MenuUI Menu { get; private set; }
     public GameUI Game { get; private set; }
 
@@ -34,7 +34,8 @@ public class UIController : MonoBehaviour
 
     public void SetMenuUI()
     {
-        GameController.Instance.CreateSave();
+        GameController.Instance.CreateSave(Game.pausePanel.IsGameOver);
+        Game.pausePanel.IsGameOver = false;
         Game.gameObject.SetActive(false);
         Menu.gameObject.SetActive(true);
     }

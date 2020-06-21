@@ -13,20 +13,27 @@ public sealed class Map : ArkanoidObject
     public int Columns { get; set; }
     public UnityEngine.Vector2 StartPosition { get; set; }
 
-    public event Action OnGenerate;
+    public delegate void OnGenerate(SaveController.SaveGameBlock saveGameBlock);
+    public event OnGenerate OnGenerated;
 
-    public void GenerateMap(bool isLoadingMap)
+    public void GenerateMap(SaveController.SaveGameBlock saveGameBlock = null)
     {
-        if (isLoadingMap)
+        OnGenerated(saveGameBlock);
+    }
+
+    public void PrepareToGenerateMap(SaveController.SaveGameBlock saveGameBlock)
+    {
+        GameController.Instance.Data.ClearDataBlocks();
+
+        if (saveGameBlock == null)
         {
-            foreach (var item in GameData.blocksOfMap)
-            {
-                item.gameObject.SetActive(true);
-            }
+            BlocksToDestroy = 0;
+            BlocksDestroyed = 0;
         }
         else
         {
-            OnGenerate?.Invoke();
+            BlocksToDestroy = saveGameBlock.BlocksOfMap.BlocksToDestroy;
+            BlocksDestroyed = saveGameBlock.BlocksOfMap.BlocksDestroyed;
         }
     }
 
@@ -40,7 +47,7 @@ public sealed class Map : ArkanoidObject
         {
             BlocksToDestroy = 0;
             BlocksDestroyed = 0;
-            GenerateMap(false);
+            GenerateMap(null);
         }
     }
 }

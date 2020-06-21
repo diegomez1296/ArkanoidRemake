@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RectangleMapState : MapState
+public class TriangleMapState : MapState
 {
-    public RectangleMapState(Map map) : base(map)
+    public TriangleMapState(Map map) : base(map)
     {
     }
 
     protected override void Initialize()
     {
-        map.Rows = 7;
-        map.Columns = 8;
-        map.StartPosition = new Vector2(-4.5f, 0.9f);
+        map.Rows = 10;
+        map.Columns = 10;
+        map.StartPosition = new Vector2(-5.5f, 3.7f);
         map.OnGenerated -= OnGenerate;
         map.OnGenerated += OnGenerate;
     }
@@ -24,9 +24,16 @@ public class RectangleMapState : MapState
         int idx = 0;
         float x = map.StartPosition.x;
         float y = map.StartPosition.y;
-        for (int i = 0; i < map.Rows; i++)
+
+        for (int i = map.Columns; i >= 0; i--)
         {
-            for (int j = 0; j < map.Columns; j++)
+            for (int j = i; j >= 0; j--)
+            {
+                x += GameController.BLOCK_WIDTH;
+                idx++;
+            }
+
+            for (int j = i; j < map.Columns; j++)
             {
                 GameData.blocksOfMap[idx].SetPosition(new Vector2(x, y));
                 if (saveGameBlock == null)
@@ -36,12 +43,11 @@ public class RectangleMapState : MapState
 
                 if (GameData.blocksOfMap[idx].CurrentState != null)
                     GameData.blocksOfMap[idx].gameObject.SetActive(true);
-
                 x += GameController.BLOCK_WIDTH;
                 idx++;
             }
             x = map.StartPosition.x;
-            y += GameController.BLOCK_HEIGHT;
+            y -= GameController.BLOCK_HEIGHT;
         }
     }
 
@@ -49,15 +55,15 @@ public class RectangleMapState : MapState
     {
         int randValue = UnityEngine.Random.Range(0, 100);
 
-        if (randValue < 70)
+        if (randValue < 50)
         {
             map.BlocksToDestroy++;
-            return GameController.Instance.GetBlock(block, 0); //70% for default block
+            return GameController.Instance.GetBlock(block, 0); //50% for default block
         }
-        else if (randValue >= 70 && randValue < 90)
+        else if (randValue >= 50 && randValue < 90)
         {
             map.BlocksToDestroy++;
-            return GameController.Instance.GetBlock(block, 1); //20% for glass block
+            return GameController.Instance.GetBlock(block, 1); //40% for glass block
         }
         else if (randValue >= 90 && randValue < 95)
             return GameController.Instance.GetBlock(block, 2); //5% for solid block

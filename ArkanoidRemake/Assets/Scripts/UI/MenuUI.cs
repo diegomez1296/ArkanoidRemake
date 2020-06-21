@@ -12,6 +12,8 @@ public class MenuUI : MonoBehaviour
     private void OnEnable()
     {
         Time.timeScale = 1;
+        if (LevelController.Instance != null)
+            LevelController.Instance.Plank.ball.SetPosition(new Vector2(-100,-100));
         buttons = buttonsPanel.GetComponentsInChildren<Button>();
         buttons[0].interactable = false;
 
@@ -23,7 +25,7 @@ public class MenuUI : MonoBehaviour
 
     public void OnClickContinue()
     {
-
+        GameController.Instance.LoadGame();
     }
 
     public void OnClickNewGame()

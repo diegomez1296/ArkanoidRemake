@@ -12,6 +12,6 @@ public abstract class MapState : ArkanoidState
         Initialize();
     }
 
-    protected abstract void OnGenerate(); //This method describe how to generate map
+    protected abstract void OnGenerate(SaveController.SaveGameBlock saveGameBlock); //This method describe how to generate map
     protected abstract BlockState RandomBlock(Block block); //This method describe how to create random block
 }

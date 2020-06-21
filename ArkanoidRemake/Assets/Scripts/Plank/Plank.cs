@@ -103,7 +103,6 @@ public class Plank : MonoBehaviour
             ball.BallRB.velocity = Vector3.zero;
 
             float difference = plankCenter.x - hitpoint.x;
-            Debug.Log("difference: " + difference);
             if (hitpoint.x < plankCenter.x)
                 ball.BallRB.AddForce(new Vector2(-(Mathf.Abs(difference * GameController.START_BALL_SPEED)), GameController.START_BALL_SPEED * ball.CurrentSpeed));
             else

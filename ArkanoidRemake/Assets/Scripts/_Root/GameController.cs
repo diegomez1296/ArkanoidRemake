@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour
 {
     public const int START_BALL_SPEED = 500;
     public const int BONUSES_AMOUNT = 4;
-    public const int MAPS_PATTERN_AMOUNT = 1;
+    public const int MAPS_PATTERN_AMOUNT = 2;
     public const int MAX_AMOUNT_OF_BLOCKS_IN_MAP = 270;
     public const float BLOCK_WIDTH = 1;
     public const float BLOCK_HEIGHT = 0.4f;
@@ -17,7 +17,6 @@ public class GameController : MonoBehaviour
     public static GameController Instance;
     private static bool isGameRunning = false;
     public static bool IsGameRunning {get { return isGameRunning; } set { isGameRunning = value; Cursor.visible = !isGameRunning; } }
-
 
     public GameData Data { get; private set; }
 
@@ -56,16 +55,26 @@ public class GameController : MonoBehaviour
         LevelController.Instance.ActivePlayer(3);
     }
 
+    internal void LoadGame()
+    {
+        Debug.Log("LoadGame");
+        GameData.CurrentScore = Save.SaveBlock.Currentscore;
+        CreateNewMap(Save.SaveBlock);
+        SetGameUI();
+        IsGameRunning = true;
+        LevelController.Instance.ActivePlayer(Save.SaveBlock.PlankHP);
+    }
+
     private void SetGameUI()
     {
         UIController.Instance.SetGameUI();
     }
 
-    private void CreateNewMap()
+    private void CreateNewMap(SaveController.SaveGameBlock saveGameBlock = null)
     {
         Map map = LevelController.Instance.Map;
-        map.CurrentState = GetRandomMap(map, UnityEngine.Random.Range(0, MAPS_PATTERN_AMOUNT));
-        map.GenerateMap(false);
+        map.CurrentState = saveGameBlock != null ? GetMap(map, Save.SaveBlock.BlocksOfMap.CurrentMapState) : GetMap(map, UnityEngine.Random.Range(0, MAPS_PATTERN_AMOUNT));
+        map.GenerateMap(saveGameBlock);
     }
 
     public void CreateBonus(Block block, BonusState bonusState = null)
@@ -109,13 +118,10 @@ public class GameController : MonoBehaviour
         switch (param)
         {
             case 0:
-                Debug.Log("Def block");
                 return new DefaultBlockState(block);
             case 1:
-                Debug.Log("Glass block");
                 return new GlassBlockState(block);
             case 2:
-                Debug.Log("Solid block");
                 return new SolidBlockState(block);
             case 3:
                 return new TNTBlockState(block);
@@ -124,20 +130,40 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private MapState GetRandomMap(Map map, int param)
+    public int BlockStateToInt(BlockState block)
+    {
+        if (typeof(DefaultBlockState).IsInstanceOfType(block)) return 0;
+        if (typeof(GlassBlockState).IsInstanceOfType(block)) return 1;
+        if (typeof(SolidBlockState).IsInstanceOfType(block)) return 2;
+        if (typeof(TNTBlockState).IsInstanceOfType(block)) return 3;
+        else return -10;
+    }
+
+    private MapState GetMap(Map map, int param)
     {
         switch (param)
         {
             case 0:
                 return new RectangleMapState(map);
+            case 1:
+                return new TriangleMapState(map);
             default:
                 return null;
         }
     }
 
-    internal void CreateSave()
+    public int MapStateToInt(MapState map)
     {
-        Save.CreateSave();
+        if (typeof(RectangleMapState).IsInstanceOfType(map)) return 0;
+        if (typeof(TriangleMapState).IsInstanceOfType(map)) return 1;
+        else return -1;
+    }
+
+    internal void CreateSave(bool isGameOver)
+    {
+        bool saveMap = !isGameOver;
+
+        Save.CreateSave(saveMap);
     }
 
     internal void CheckHighscore(int currentScore)
