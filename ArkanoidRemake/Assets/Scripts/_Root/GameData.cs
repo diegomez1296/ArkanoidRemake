@@ -41,6 +41,8 @@ public class GameData : MonoBehaviour
     public List<Texture2D> backgroundImages;
     [Space]
     public List<Sprite> lifeSprites;
+    [Space]
+    public List<AudioClip> audioClips;
 
 
     internal void CreateDataBlocks()

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public const int START_BALL_SPEED = 500;
-    public const int BONUSES_AMOUNT = 3;
+    public const int BONUSES_AMOUNT = 4;
     public const int MAPS_PATTERN_AMOUNT = 1;
     public const int MAX_AMOUNT_OF_BLOCKS_IN_MAP = 270;
     public const float BLOCK_WIDTH = 1;
@@ -92,9 +92,13 @@ public class GameController : MonoBehaviour
             case 0:
                 return new ExtraLifeBonusState(bonus);
             case 1:
-                return new SlowerBallBonusState(bonus);
+                return new SmallerSizeBonusState(bonus);
             case 2:
+                return new BiggerSizeBonusState(bonus);
+            case 3:
                 return new DeadBonusState(bonus);
+            case 10:
+                return new SlowerBallBonusState(bonus);
             default:
                 return null;
         }

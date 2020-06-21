@@ -20,6 +20,8 @@ public class SolidBlockState : BlockState
 
     protected override void OnHit()
     {
+        GameController.Instance.Audio.PlayDefBlockSFX();
+
         block.DestroyBlock();
     }
 }

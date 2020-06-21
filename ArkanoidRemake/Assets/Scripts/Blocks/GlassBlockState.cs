@@ -21,6 +21,8 @@ public class GlassBlockState : BlockState
 
     protected override void OnHit()
     {
+        //GameController.Instance.Audio.PlayGlassBlockSFX();
+
         if (block.HP / block.maxHP <= 0.4f) block.CurrentSprite.sprite = GameController.Instance.Data.blockSprites[7];
         else if (block.HP / block.maxHP <= 0.7f) block.CurrentSprite.sprite = GameController.Instance.Data.blockSprites[6];
 

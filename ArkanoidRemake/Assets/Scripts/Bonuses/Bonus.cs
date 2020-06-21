@@ -13,6 +13,7 @@ public class Bonus : ArkanoidObject
     {
         if (isUsed) return;
 
+        //GameController.Instance.Audio.PlayCollectSFX();
         OnCollected(plank);
         this.gameObject.SetActive(false);
         isUsed = true;

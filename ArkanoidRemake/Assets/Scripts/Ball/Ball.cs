@@ -36,7 +36,7 @@ public class Ball : ArkanoidObject
             if (Input.GetMouseButtonDown(0))
             {
                 BallRB.isKinematic = false;
-                BallRB.AddForce(new Vector2(Random.Range(-0.5f, 0.5f), 0.5f) * GameController.START_BALL_SPEED * CurrentSpeed);
+                BallRB.AddForce(new Vector2(-(Mathf.Abs(0.5f * GameController.START_BALL_SPEED)), GameController.START_BALL_SPEED * CurrentSpeed));
                 IsRunning = true;
             }
         }

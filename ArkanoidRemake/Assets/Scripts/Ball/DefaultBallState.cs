@@ -11,7 +11,7 @@ public class DefaultBallState : BallState
     protected override void Initialize()
     {
         ball.Damage = 1;
-        ball.CurrentSpeed = 1;
+        ball.CurrentSpeed = 0.75f;
         ball.SpeedIncrease = 0.001f;
         ball.OnHitted -= OnHit;
         ball.OnHitted += OnHit;
@@ -19,10 +19,10 @@ public class DefaultBallState : BallState
 
     protected override void OnHit()
     {
-        if (ball.CurrentSpeed < 1.05f)
-        {
-            ball.CurrentSpeed += ball.SpeedIncrease;
-            ball.BallRB.velocity *= ball.CurrentSpeed;
-        }
+        //if (ball.CurrentSpeed < 1.05f)
+        //{
+        //    ball.CurrentSpeed += ball.SpeedIncrease;
+        //    ball.BallRB.velocity *= ball.CurrentSpeed;
+        //}
     }
 }
