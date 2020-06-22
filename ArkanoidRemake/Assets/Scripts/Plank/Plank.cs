@@ -40,13 +40,18 @@ public class Plank : MonoBehaviour
     public void LoseLife()
     {
         HP--;
+        ResetPlank();
+        if (hp < 0)
+            GameController.Instance.LoseGame();
+    }
+
+    public void ResetPlank()
+    {
         ball[0].IsRunning = false;
         ball[0].BallRB.isKinematic = true;
         ball[0].BallRB.velocity = Vector2.zero;
         plankSize = PlankSize.MEDIUM;
         ChangeSize();
-        if (hp < 0)
-            GameController.Instance.LoseGame();
     }
 
     internal void GetSizeBonus(bool isBiggerSize)

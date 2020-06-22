@@ -34,8 +34,7 @@ public sealed class Map : ArkanoidObject
 
         if (BlocksToDestroy <= 0)
         {
-            LevelController.Instance.Plank.LoseLife();
-            LevelController.Instance.Plank.HP++;
+            LevelController.Instance.Plank.ResetPlank();
             GenerateMap(null);
         }
     }
