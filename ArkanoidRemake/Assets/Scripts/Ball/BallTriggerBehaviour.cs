@@ -17,7 +17,8 @@ public class BallTriggerBehaviour : MonoBehaviour
     private void CollisionWithBlock(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<Block>())
+        {
             collision.gameObject.GetComponent<Block>().GetHit(Ball.Damage);
+        }
     }
-
 }

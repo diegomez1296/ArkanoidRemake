@@ -6,10 +6,11 @@ using UnityEngine.UI;
 
 public class BGMove : MonoBehaviour
 {
-    private RawImage rawImage => GetComponent<RawImage>();
+    private RawImage rawImage;
     private float valueX, valueY;
     private float time = 0.01f;
 
+    private void Start() => rawImage = GetComponent<RawImage>();
     private void OnEnable () => StartCoroutine(MoveBG(time));
     private void OnDisable () => StopCoroutine(MoveBG(time));
 

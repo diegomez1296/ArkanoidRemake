@@ -19,6 +19,5 @@ public class ExtraLifeBonusState : BonusState
     {
         plank.HP++;
         GameData.CurrentScore += bonus.bonusScore;
-        Debug.Log(plank.HP);
     }
 }

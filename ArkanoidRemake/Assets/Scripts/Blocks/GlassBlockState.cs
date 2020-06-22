@@ -15,6 +15,7 @@ public class GlassBlockState : BlockState
         block.Score = 300;
         block.BonusPercent = 50;
         block.CurrentSprite.sprite = GameController.Instance.Data.blockSprites[5];
+        //block.AudioSource.clip = GameController.Instance.Data.audioClips[2];
         block.OnHitted -= OnHit;
         block.OnHitted += OnHit;
     }

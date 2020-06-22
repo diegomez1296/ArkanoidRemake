@@ -7,7 +7,6 @@ using UnityEngine;
 public sealed class Map : ArkanoidObject
 {
     public int BlocksToDestroy { get; set; }
-    public int BlocksDestroyed { get; set; }
 
     public int Rows { get; set; }
     public int Columns { get; set; }
@@ -21,32 +20,22 @@ public sealed class Map : ArkanoidObject
         OnGenerated(saveGameBlock);
     }
 
-    public void PrepareToGenerateMap(SaveController.SaveGameBlock saveGameBlock)
-    {
-        GameController.Instance.Data.ClearDataBlocks();
-
-        if (saveGameBlock == null)
-        {
-            BlocksToDestroy = 0;
-            BlocksDestroyed = 0;
-        }
-        else
-        {
-            BlocksToDestroy = saveGameBlock.BlocksOfMap.BlocksToDestroy;
-            BlocksDestroyed = saveGameBlock.BlocksOfMap.BlocksDestroyed;
-        }
-    }
-
     public void CheckDestroyedBlocks()
     {
-        if (BlocksToDestroy <= 0) return;
+        BlocksToDestroy = 0;
 
-        Debug.Log("BlocksDestroyed: " + BlocksDestroyed + "/" + BlocksToDestroy);
-
-        if (BlocksDestroyed >= BlocksToDestroy)
+        foreach (var item in GameData.blocksOfMap)
         {
-            BlocksToDestroy = 0;
-            BlocksDestroyed = 0;
+            if (item.gameObject.activeSelf && !typeof(SolidBlockState).IsInstanceOfType(item) && item.HP > 0 && item.HP < 100)
+                BlocksToDestroy++;
+        }
+
+        //Debug.Log("BlocksToDestroy: " + BlocksToDestroy);
+
+        if (BlocksToDestroy <= 0)
+        {
+            LevelController.Instance.Plank.LoseLife();
+            LevelController.Instance.Plank.HP++;
             GenerateMap(null);
         }
     }

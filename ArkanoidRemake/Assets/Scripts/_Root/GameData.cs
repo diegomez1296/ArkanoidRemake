@@ -7,7 +7,6 @@ public class GameData : MonoBehaviour
 {
     public static List<Block> blocksOfMap = new List<Block>();
 
-    //Resolution X
     public static float ResMinX => 0 - Camera.main.aspect * 5;
     public static float ResMaxX => 0 + Camera.main.aspect * 5;
 
@@ -44,7 +43,6 @@ public class GameData : MonoBehaviour
     [Space]
     public List<AudioClip> audioClips;
 
-
     internal void CreateDataBlocks()
     {
         blocksOfMap.Clear();
@@ -60,8 +58,10 @@ public class GameData : MonoBehaviour
     {
         foreach (var item in blocksOfMap)
         {
+            item.HP = -1;
+            item.SetPosition(new Vector2(-1000, -1000));
             item.gameObject.SetActive(false);
-            item.isUsed = false;
+            item.IsUsed = false;
         }
     }
 }

@@ -35,7 +35,6 @@ public class SaveController : MonoBehaviour
 
     public SaveGameBlock SaveBlock { get; private set; }
 
-
     public void CreateSave(bool saveMap)
     {
         if (saveMap)
@@ -48,7 +47,6 @@ public class SaveController : MonoBehaviour
         {
             SaveBlock = new SaveGameBlock(GameData.CurrentScore > GameData.HighScore ? GameData.CurrentScore : GameData.HighScore);
         }
-
         SaveGame();
     }
 

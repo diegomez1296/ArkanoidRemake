@@ -14,6 +14,7 @@ public class SolidBlockState : BlockState
         block.Score = 1000;
         block.BonusPercent = 100;
         block.CurrentSprite.sprite = GameController.Instance.Data.blockSprites[0];
+        //block.AudioSource.clip = GameController.Instance.Data.audioClips[1];
         block.OnHitted -= OnHit;
         block.OnHitted += OnHit;
     }
@@ -21,7 +22,6 @@ public class SolidBlockState : BlockState
     protected override void OnHit()
     {
         GameController.Instance.Audio.PlayDefBlockSFX();
-
         block.DestroyBlock();
     }
 }

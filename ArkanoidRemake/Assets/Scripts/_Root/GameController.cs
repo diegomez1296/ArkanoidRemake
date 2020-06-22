@@ -6,23 +6,26 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    #region CONSTANS
+    public const int MAX_AMOUNT_OF_BLOCKS_IN_MAP = 270;
+    public const int MAPS_PATTERN_AMOUNT = 2;
     public const int START_BALL_SPEED = 500;
     public const int BONUSES_AMOUNT = 4;
-    public const int MAPS_PATTERN_AMOUNT = 2;
-    public const int MAX_AMOUNT_OF_BLOCKS_IN_MAP = 270;
-    public const float BLOCK_WIDTH = 1;
     public const float BLOCK_HEIGHT = 0.4f;
+    public const float BLOCK_WIDTH = 1;
     public static string SAVES_PATH;
+    #endregion
 
     public static GameController Instance;
+
     private static bool isGameRunning = false;
     public static bool IsGameRunning {get { return isGameRunning; } set { isGameRunning = value; Cursor.visible = !isGameRunning; } }
 
     public GameData Data { get; private set; }
-
     public SaveController Save { get; private set; }
     public AudioController Audio { get; private set; }
 
+    #region METHODS
     private void Awake() => Instance = this;
 
     private void Start()
@@ -34,14 +37,13 @@ public class GameController : MonoBehaviour
         SAVES_PATH = Application.dataPath + "/StreamingAssets/Saves/";
         Save.LoadGame();
         StartCoroutine(LoadLevels());
-        
     }
 
     private IEnumerator LoadLevels()
     {
         yield return SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
         yield return SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         Data.CreateDataBlocks(); 
     }
 
@@ -83,7 +85,7 @@ public class GameController : MonoBehaviour
         bonus.SetPosition(block.transform.position);
         if (bonusState != null) bonus.CurrentState = bonusState;
         else bonus.CurrentState = GetBonus(bonus, UnityEngine.Random.Range(0, BONUSES_AMOUNT));
-        bonus.isUsed = false;
+        bonus.IsUsed = false;
         bonus.gameObject.SetActive(true);
         bonus.GetComponent<Rigidbody2D>().isKinematic = false;
     }
@@ -92,7 +94,6 @@ public class GameController : MonoBehaviour
         IsGameRunning = false;
         UIController.Instance.Game.pausePanel.ShowGameOver();
     }
-
 
     private BonusState GetBonus(Bonus bonus, int param)
     {
@@ -138,7 +139,7 @@ public class GameController : MonoBehaviour
         if (typeof(TNTBlockState).IsInstanceOfType(block)) return 3;
         else return -10;
     }
-
+    
     private MapState GetMap(Map map, int param)
     {
         switch (param)
@@ -151,6 +152,7 @@ public class GameController : MonoBehaviour
                 return null;
         }
     }
+    
 
     public int MapStateToInt(MapState map)
     {
@@ -158,6 +160,7 @@ public class GameController : MonoBehaviour
         if (typeof(TriangleMapState).IsInstanceOfType(map)) return 1;
         else return -1;
     }
+    
 
     internal void CreateSave(bool isGameOver)
     {
@@ -171,4 +174,5 @@ public class GameController : MonoBehaviour
         GameData.HighScore = currentScore > GameData.HighScore ? currentScore : GameData.HighScore;
     }
 
+    #endregion
 }

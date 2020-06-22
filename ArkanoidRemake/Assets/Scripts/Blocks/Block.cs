@@ -10,32 +10,31 @@ public class Block : ArkanoidObject
     public int Score { get; set; }
     public float BonusPercent { get; set; }
     public SpriteRenderer CurrentSprite => GetComponent<SpriteRenderer>();
+    public AudioSource AudioSource => GetComponent<AudioSource>();
 
     public event Action OnHitted;
 
     public void GetHit(float damage)
     {
+        if (!this.gameObject.activeSelf || HP <= 0) return;
+
         HP -= damage;
         OnHitted?.Invoke();
     }
 
     public void DestroyBlock()
     {
-        if (HP <= 0 && !isUsed)
+        if (HP <= 0 && !IsUsed)
         {
-            Debug.Log("DestroyBlock");
-            if (!typeof(SolidBlockState).IsInstanceOfType(this))
-            {
-                LevelController.Instance.Map.BlocksDestroyed++;
-                LevelController.Instance.Map.CheckDestroyedBlocks();
-            }
+            LevelController.Instance.Map.CheckDestroyedBlocks();
 
             if (100 - BonusPercent <= UnityEngine.Random.Range(0, 100))
                 GameController.Instance.CreateBonus(this);
 
             gameObject.SetActive(false);
             GameData.CurrentScore += Score;
-            isUsed = true;
+            this.SetPosition(new Vector2(-1000, -1000));
+            IsUsed = true;
         }
     }
 }

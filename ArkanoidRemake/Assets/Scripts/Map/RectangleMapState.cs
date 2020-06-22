@@ -19,7 +19,7 @@ public class RectangleMapState : MapState
 
     protected override void OnGenerate(SaveController.SaveGameBlock saveGameBlock)
     {
-        map.PrepareToGenerateMap(saveGameBlock);
+        GameController.Instance.Data.ClearDataBlocks();
 
         int idx = 0;
         float x = map.StartPosition.x;
@@ -43,6 +43,8 @@ public class RectangleMapState : MapState
             x = map.StartPosition.x;
             y += GameController.BLOCK_HEIGHT;
         }
+
+        map.CheckDestroyedBlocks();
     }
 
     protected override BlockState RandomBlock(Block block)

@@ -10,6 +10,5 @@ public abstract class BlockState : ArkanoidState
         this.block = block;
         Initialize();
     }
-
     protected abstract void OnHit(); //This method describe what will happen after hit
 }

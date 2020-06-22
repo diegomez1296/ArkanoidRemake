@@ -13,7 +13,7 @@ public enum PlankSize
 
 public class Plank : MonoBehaviour
 {
-    public Ball ball;
+    public List<Ball> ball;
     private PlankSize plankSize = PlankSize.MEDIUM;
     private CapsuleCollider2D capsuleCollider2D;
     private SpriteRenderer spriteRenderer;
@@ -40,9 +40,9 @@ public class Plank : MonoBehaviour
     public void LoseLife()
     {
         HP--;
-        ball.IsRunning = false;
-        ball.BallRB.isKinematic = true;
-        ball.BallRB.velocity = Vector2.zero;
+        ball[0].IsRunning = false;
+        ball[0].BallRB.isKinematic = true;
+        ball[0].BallRB.velocity = Vector2.zero;
         plankSize = PlankSize.MEDIUM;
         ChangeSize();
         if (hp < 0)
@@ -98,6 +98,8 @@ public class Plank : MonoBehaviour
     {
         if(collision.gameObject.GetComponent<Ball>())
         {
+            Ball ball = collision.gameObject.GetComponent<Ball>();
+
             Vector3 hitpoint = collision.contacts[0].point;
             Vector3 plankCenter = new Vector3(this.gameObject.transform.position.x, gameObject.transform.position.y);
             ball.BallRB.velocity = Vector3.zero;

@@ -9,7 +9,7 @@ public abstract class BonusState : ArkanoidState
     protected BonusState(Bonus bonus)
     {
         this.bonus = bonus;
-        bonus.isUsed = false;
+        bonus.IsUsed = false;
         Initialize();
     }
 

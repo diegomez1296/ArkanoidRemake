@@ -43,15 +43,26 @@ public class GameUI : MonoBehaviour
         highscore.text = GameData.HighScore + "";
     }
 
+    public void SetDefaultScoreColors()
+    {
+        isMoreThanHighscore = false;
+        currscore.color = currentScoreColor; 
+        highscore.color = highscoreColor;
+    }
+
     public void SetCurrentScore()
     {
         currscore.text = GameData.CurrentScore + "";
 
-        if(GameData.CurrentScore > GameData.HighScore && !isMoreThanHighscore)
+        if(GameData.CurrentScore > GameData.HighScore)
         {
-            currscore.color = highscoreColor;
-            highscore.color = currentScoreColor;
-            isMoreThanHighscore = true;
+            GameData.HighScore = GameData.CurrentScore;
+            if (!isMoreThanHighscore)
+            {
+                currscore.color = highscoreColor;
+                highscore.color = currentScoreColor;
+                isMoreThanHighscore = true;
+            }
         }
     }
 

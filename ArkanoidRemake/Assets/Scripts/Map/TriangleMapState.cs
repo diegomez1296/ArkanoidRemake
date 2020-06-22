@@ -19,7 +19,7 @@ public class TriangleMapState : MapState
 
     protected override void OnGenerate(SaveController.SaveGameBlock saveGameBlock)
     {
-        map.PrepareToGenerateMap(saveGameBlock);
+        GameController.Instance.Data.ClearDataBlocks();
 
         int idx = 0;
         float x = map.StartPosition.x;
@@ -49,6 +49,8 @@ public class TriangleMapState : MapState
             x = map.StartPosition.x;
             y -= GameController.BLOCK_HEIGHT;
         }
+
+        map.CheckDestroyedBlocks();
     }
 
     protected override BlockState RandomBlock(Block block)
@@ -57,12 +59,10 @@ public class TriangleMapState : MapState
 
         if (randValue < 50)
         {
-            map.BlocksToDestroy++;
             return GameController.Instance.GetBlock(block, 0); //50% for default block
         }
         else if (randValue >= 50 && randValue < 90)
         {
-            map.BlocksToDestroy++;
             return GameController.Instance.GetBlock(block, 1); //40% for glass block
         }
         else if (randValue >= 90 && randValue < 95)

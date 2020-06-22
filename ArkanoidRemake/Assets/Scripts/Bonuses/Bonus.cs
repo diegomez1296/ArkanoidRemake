@@ -11,12 +11,12 @@ public class Bonus : ArkanoidObject
 
     public void CollectBonus(Plank plank)
     {
-        if (isUsed) return;
+        if (IsUsed) return;
 
         //GameController.Instance.Audio.PlayCollectSFX();
         OnCollected(plank);
         this.gameObject.SetActive(false);
-        isUsed = true;
+        IsUsed = true;
         Destroy(this.gameObject);
     }
 }

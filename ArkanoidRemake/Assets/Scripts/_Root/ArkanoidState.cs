@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class ArkanoidState 
 {
-    protected abstract void Initialize(); //This method describe values of our Object
+    protected abstract void Initialize(); //This method describe init values of our Object
 }

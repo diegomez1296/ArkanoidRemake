@@ -13,7 +13,7 @@ public class MenuUI : MonoBehaviour
     {
         Time.timeScale = 1;
         if (LevelController.Instance != null)
-            LevelController.Instance.Plank.ball.SetPosition(new Vector2(-100,-100));
+            LevelController.Instance.Plank.ball[0].SetPosition(new Vector2(-100,-100));
         buttons = buttonsPanel.GetComponentsInChildren<Button>();
         buttons[0].interactable = false;
 

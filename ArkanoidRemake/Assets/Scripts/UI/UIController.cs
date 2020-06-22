@@ -26,6 +26,7 @@ public class UIController : MonoBehaviour
     {
         Game.SetCurrentScore();
         Game.SetHighScore();
+        Game.SetDefaultScoreColors();
         Game.SetHP(LevelController.Instance.Plank.HP);
         Game.pausePanel.HidePause();
         Menu.gameObject.SetActive(false);

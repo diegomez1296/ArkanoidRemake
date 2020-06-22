@@ -15,6 +15,7 @@ public class DefaultBlockState : BlockState
         block.Score = 100;
         block.BonusPercent = 30;
         block.CurrentSprite.sprite = GameController.Instance.Data.blockSprites[UnityEngine.Random.Range(1, 5)];
+        //block.AudioSource.clip = GameController.Instance.Data.audioClips[1];
         block.GetComponent<IgnoreColliderEffect>().enabled = true;
         block.OnHitted -= OnHit;
         block.OnHitted += OnHit;
